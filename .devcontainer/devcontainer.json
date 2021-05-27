@@ -1,0 +1,5 @@
+{
+  "name": "chathook",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [5000]
+}
