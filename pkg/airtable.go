@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+const AIRTABLE_DATETIME_FORMAT string = "2006-01-02T15:04:05+00:00"
+
 type IAirtable interface {
 	CreateRecord(recordHasStringFields interface{})
 }
