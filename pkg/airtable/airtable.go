@@ -1,4 +1,4 @@
-package pkg
+package airtable
 
 import (
 	"bytes"
