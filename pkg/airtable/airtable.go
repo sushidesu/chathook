@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	recordattendance "github.com/sushidesu/chathook/usecase/record_attendance"
 )
 
 const AIRTABLE_DATETIME_FORMAT string = "2006-01-02T15:04:05+00:00"
 
-type IAirtable interface {
-	CreateRecord(recordHasStringFields interface{})
-}
+type IAirtable = recordattendance.IAirtable_Client
 
 type Airtable struct {
 	BaseUrl string
@@ -27,7 +27,7 @@ type CreateRecordObject struct {
 	Records []FieldObject `json:"records"`
 }
 
-func (airtable Airtable) CreateRecord(record interface{}) {
+func (airtable Airtable) CreateRecord(record map[string]interface{}) {
 	fmt.Println("start request...")
 	records := []FieldObject{{
 		Field: record,
@@ -51,4 +51,8 @@ func (airtable Airtable) CreateRecord(record interface{}) {
 
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body: ", string(body))
+}
+
+func (airtable Airtable) DATETIME_FORMAT_STRING() string {
+	return AIRTABLE_DATETIME_FORMAT
 }
