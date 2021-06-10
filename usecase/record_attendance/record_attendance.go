@@ -28,8 +28,8 @@ func (recordAttendance RecordAttendanceUsecase) Record() {
 	}
 
 	record := CreateAttendanceRecord{
-		"datetime": attendance.Datetime.Format(recordAttendance.airtableClient.DATETIME_FORMAT_STRING()),
-		"status":   statusStrings,
+		"datetime":    attendance.Datetime.Format(recordAttendance.airtableClient.DATETIME_FORMAT_STRING()),
+		"eventTypeId": statusStrings,
 	}
 
 	recordAttendance.airtableClient.CreateRecord(record)
