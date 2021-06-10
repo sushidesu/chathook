@@ -75,9 +75,12 @@ func (airtable Airtable) CreateRecord(record recordattendance.CreateAttendanceRe
 }
 
 func (airtable Airtable) convert(record recordattendance.CreateAttendanceRecord) RecordMap {
+	eventTypeIds := [1]string{ENTER_OR_LEAVE[record.EventType]}
+	placeTypeIds := [1]string{OFFICE_OR_HOME[record.PlaceType]}
+
 	return RecordMap{
 		"datetime":    record.Datetime.Format(AIRTABLE_DATETIME_FORMAT),
-		"eventTypeId": ENTER_OR_LEAVE[record.EventType],
-		"placeTypeId": OFFICE_OR_HOME[record.PlaceType],
+		"eventTypeId": eventTypeIds,
+		"placeTypeId": placeTypeIds,
 	}
 }
