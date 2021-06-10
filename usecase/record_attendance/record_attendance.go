@@ -31,7 +31,11 @@ func NewRecordAttendanceUsecase(airtableClient IAirtable_Client) *RecordAttendan
 	}
 }
 
-// レコードを生成して、文字列に変換したものをAirtableに登録する
+// 指定した eventType, placeType のレコードを Airtable に記録する
+//
+// eventType: "ENTER" | "LEAVE"
+//
+// placeType: "OFFICE" | "HOME"
 func (recordAttendance RecordAttendanceUsecase) Record(eventType string, placeType string) {
 	attendance, err := attendance.NewAttendanceRecord(eventType, placeType)
 
