@@ -6,7 +6,7 @@ import (
 
 type Attendance struct {
 	Datetime time.Time
-	Status   []*AttendanceStatus
+	Status   AttendanceStatus
 }
 
 func NewAttendanceRecord(status string) (*Attendance, error) {
@@ -17,6 +17,6 @@ func NewAttendanceRecord(status string) (*Attendance, error) {
 
 	return &Attendance{
 		Datetime: time.Now(),
-		Status:   []*AttendanceStatus{attendanceStatus},
+		Status:   *attendanceStatus,
 	}, nil
 }

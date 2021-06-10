@@ -6,6 +6,11 @@ import (
 	"github.com/sushidesu/chathook/domain/attendance"
 )
 
+/*
+EventType は　"ENTER" または　"LEAVE"
+
+PlaceType は "OFFICE" または "HOME"
+*/
 type CreateAttendanceRecord struct {
 	Datetime  time.Time
 	EventType string
@@ -30,14 +35,10 @@ func NewRecordAttendanceUsecase(airtableClient IAirtable_Client) *RecordAttendan
 func (recordAttendance RecordAttendanceUsecase) Record() {
 	attendance, _ := attendance.NewAttendanceRecord("ENTER")
 
-	var statusStrings []string
-	for _, status := range attendance.Status {
-		statusStrings = append(statusStrings, status.Value)
-	}
-
 	record := CreateAttendanceRecord{
-		"datetime":    attendance.Datetime.Format(recordAttendance.airtableClient.DATETIME_FORMAT_STRING()),
-		"eventTypeId": statusStrings,
+		Datetime:  attendance.Datetime,
+		EventType: attendance.Status.Value,
+		PlaceType: // TODO
 	}
 
 	recordAttendance.airtableClient.CreateRecord(record)
