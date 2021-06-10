@@ -1,6 +1,16 @@
 package recordattendance
 
-import "github.com/sushidesu/chathook/domain/attendance"
+import (
+	"time"
+
+	"github.com/sushidesu/chathook/domain/attendance"
+)
+
+type CreateAttendanceRecord struct {
+	Datetime  time.Time
+	EventType string
+	PlaceType string
+}
 
 type IRecordAttendanceUsecase interface {
 	Record()
@@ -15,8 +25,6 @@ func NewRecordAttendanceUsecase(airtableClient IAirtable_Client) *RecordAttendan
 		airtableClient: airtableClient,
 	}
 }
-
-type CreateAttendanceRecord map[string]interface{}
 
 // レコードを生成して、文字列に変換したものをAirtableに登録する
 func (recordAttendance RecordAttendanceUsecase) Record() {
