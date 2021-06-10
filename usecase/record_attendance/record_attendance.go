@@ -18,6 +18,7 @@ func NewRecordAttendanceUsecase(airtableClient IAirtable_Client) *RecordAttendan
 
 type CreateAttendanceRecord map[string]interface{}
 
+// レコードを生成して、文字列に変換したものをAirtableに登録する
 func (recordAttendance RecordAttendanceUsecase) Record() {
 	attendance, _ := attendance.NewAttendanceRecord("ENTER")
 
