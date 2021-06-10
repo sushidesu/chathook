@@ -5,18 +5,25 @@ import (
 )
 
 type Attendance struct {
-	Datetime time.Time
-	Status   AttendanceStatus
+	Datetime  time.Time
+	Status    AttendanceStatus
+	PlaceType AttendancePlaceType
 }
 
-func NewAttendanceRecord(status string) (*Attendance, error) {
+func NewAttendanceRecord(status string, place string) (*Attendance, error) {
 	attendanceStatus, err := NewAttendanceStatus(status)
 	if err != nil {
 		return nil, err
 	}
 
+	placeType, err := NewAttendancePlaceType(place)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Attendance{
-		Datetime: time.Now(),
-		Status:   *attendanceStatus,
+		Datetime:  time.Now(),
+		Status:    *attendanceStatus,
+		PlaceType: *placeType,
 	}, nil
 }
