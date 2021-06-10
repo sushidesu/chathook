@@ -8,18 +8,14 @@ type AttendanceStatus struct {
 	Value string
 }
 
-const enterId = "recUZn6wg6HPuIwQ9"
-const leaveId = "recirLaEnVTE9aGb3"
+var AVAILABLE_STATUS = []string{"ENTER", "LEAVE"}
 
-var idMap = map[string]string{
-	"ENTER": enterId,
-	"LEAVE": leaveId,
-}
-
+// value は "ENTER" or "LEAVE"
 func NewAttendanceStatus(value string) (*AttendanceStatus, error) {
-	if value != "ENTER" && value != "LEAVE" {
-		return nil, errors.New("invalid status")
-	} else {
-		return &AttendanceStatus{idMap[value]}, nil
+	for _, v := range AVAILABLE_STATUS {
+		if v != value {
+			return nil, errors.New("invalid status")
+		}
 	}
+	return &AttendanceStatus{Value: value}, nil
 }
