@@ -33,7 +33,11 @@ func NewRecordAttendanceUsecase(airtableClient IAirtable_Client) *RecordAttendan
 
 // レコードを生成して、文字列に変換したものをAirtableに登録する
 func (recordAttendance RecordAttendanceUsecase) Record() {
-	attendance, _ := attendance.NewAttendanceRecord("ENTER", "OFFICE")
+	attendance, err := attendance.NewAttendanceRecord("ENTER", "OFFICE")
+
+	if err != nil {
+		panic(err)
+	}
 
 	record := CreateAttendanceRecord{
 		Datetime:  attendance.Datetime,
