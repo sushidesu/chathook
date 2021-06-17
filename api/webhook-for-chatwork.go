@@ -1,14 +1,15 @@
 package api
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/sushidesu/chathook/infra/airtable"
 	"github.com/sushidesu/chathook/infra/chatwork"
 	parsemessage "github.com/sushidesu/chathook/usecase/parse_message"
+	recordattendance "github.com/sushidesu/chathook/usecase/record_attendance"
 )
 
 func WebhookForChatwork(w http.ResponseWriter, r *http.Request) {
@@ -33,5 +34,18 @@ func WebhookForChatwork(w http.ResponseWriter, r *http.Request) {
 	parseResult := parseMessageUsecase.Parse(string(body))
 
 	// Airtableへ結果を保存
-	fmt.Println(parseResult.Type.Value)
+	// その他のメッセージ
+	if parseResult.Type.Value == "OTHER" {
+		return
+	}
+
+	// 保存準備
+	airtableClient := airtable.Airtable{BaseUrl: os.Getenv("AIRTABLE_BASE_URL"), ApiKey: os.Getenv("AIRTABLE_API_KEY")}
+	recordAttendanceUsecase := recordattendance.NewRecordAttendanceUsecase(airtableClient)
+
+	// LEAVEメッセージ
+	if parseResult.Type.Value == "LEAVE_HOME" {
+		recordAttendanceUsecase.Record("LEAVE", "HOME")
+		return
+	}
 }
