@@ -27,3 +27,21 @@ func NewAttendanceRecord(status string, place string) (*Attendance, error) {
 		PlaceType: *placeType,
 	}, nil
 }
+
+func NewAttendanceRecordSpecifyTime(status string, place string, dateTime time.Time) (*Attendance, error) {
+	attendanceStatus, err := NewAttendanceStatus(status)
+	if err != nil {
+		return nil, err
+	}
+
+	placeType, err := NewAttendancePlaceType(place)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Attendance{
+		Datetime:  dateTime,
+		Status:    *attendanceStatus,
+		PlaceType: *placeType,
+	}, nil
+}

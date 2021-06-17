@@ -51,3 +51,19 @@ func (recordAttendance RecordAttendanceUsecase) Record(eventType string, placeTy
 
 	recordAttendance.airtableClient.CreateRecord(record)
 }
+
+func (recordAttendance RecordAttendanceUsecase) RecordSpecifyTime(eventType string, placeType string, datetime time.Time) {
+	attendance, err := attendance.NewAttendanceRecordSpecifyTime(eventType, placeType, datetime)
+
+	if err != nil {
+		panic(err)
+	}
+
+	record := CreateAttendanceRecord{
+		Datetime:  attendance.Datetime,
+		EventType: attendance.Status.Value,
+		PlaceType: attendance.PlaceType.Value,
+	}
+
+	recordAttendance.airtableClient.CreateRecord(record)
+}
