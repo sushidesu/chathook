@@ -11,7 +11,7 @@ import (
 )
 
 // レコードのID等
-const AIRTABLE_DATETIME_FORMAT string = "2006-01-02T15:04:05+00:00"
+const AIRTABLE_DATETIME_FORMAT string = "2006-01-02T15:04:05+09:00"
 
 const ENTER_ID = "recUZn6wg6HPuIwQ9"
 const LEAVE_ID = "recirLaEnVTE9aGb3"
