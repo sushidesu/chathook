@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/sushidesu/chathook/domain/constants"
 	"github.com/sushidesu/chathook/infra/airtable"
 	"github.com/sushidesu/chathook/infra/chatwork"
 	parsemessage "github.com/sushidesu/chathook/usecase/parse_message"
@@ -46,8 +46,7 @@ func WebhookForChatwork(w http.ResponseWriter, r *http.Request) {
 
 	// LEAVEメッセージ
 	if parseResult.Type.Value == "LEAVE_HOME" {
-		now := time.Now()
-		recordAttendanceUsecase.RecordSpecifyTime("ENTER", "HOME", time.Date(now.Year(), now.Month(), now.Day(), 10, 0, 0, 0, time.Local))
+		recordAttendanceUsecase.RecordSpecifyTime("ENTER", "HOME", constants.RegularTimeEnter())
 		recordAttendanceUsecase.Record("LEAVE", "HOME")
 		return
 	}
